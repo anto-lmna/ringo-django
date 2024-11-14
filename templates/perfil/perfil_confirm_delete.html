@@ -1,0 +1,13 @@
+{% extends "_base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2>Eliminar Perfil</h2>
+  <p>¿Estás seguro de que deseas eliminar el perfil de {{ perfil.nombre_perfil }}?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Confirmar</button>
+    <a href="{% url 'ver_perfil' perfil.id %}" class="btn btn-secondary">Cancelar</a>
+  </form>
+</div>
+{% endblock %}

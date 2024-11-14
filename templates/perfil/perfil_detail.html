@@ -1,0 +1,19 @@
+{% extends "_base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2>Perfil de {{ perfil.nombre_perfil }}</h2>
+  <ul class="list-group mt-4">
+    <li class="list-group-item"><strong>Nombre:</strong> {{ perfil.nombre_perfil }}</li>
+    <li class="list-group-item"><strong>Edad:</strong> {{ perfil.edad }}</li>
+    <li class="list-group-item"><strong>Peso:</strong> {{ perfil.peso }}</li>
+    <li class="list-group-item"><strong>Deporte:</strong> {{ perfil.get_deporte_display }}</li>
+    <li class="list-group-item"><strong>Género:</strong> {{ perfil.get_genero_display }}</li>
+    {% if perfil.foto %}
+      <li class="list-group-item"><strong>Foto:</strong> <img src="{{ perfil.foto.url }}" alt="Foto de perfil" class="img-thumbnail mt-2" width="200"></li>
+    {% endif %}
+  </ul>
+  <a href="{% url 'editar_perfil' perfil.id %}" class="btn btn-secondary mt-4">Editar</a>
+  <a href="{% url 'eliminar_perfil' perfil.id %}" class="btn btn-danger mt-4">Eliminar</a>
+</div>
+{% endblock %}

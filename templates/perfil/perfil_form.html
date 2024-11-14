@@ -1,0 +1,68 @@
+{% extends "_base.html" %} {% block content %}
+
+<div class="container mt-5">
+	<h2>Crear Perfil</h2>
+	<form method="post" action="" enctype="multipart/form-data">
+		{% csrf_token %}
+
+		<!-- Foto de Perfil -->
+		<div class="mb-3">
+			<label for="id_foto" class="form-label">Foto de Perfil</label>
+			{{ form.foto }} {% if form.foto.errors %}
+			<div class="text-danger">{{ form.foto.errors }}</div>
+			{% endif %}
+		</div>
+
+		<!-- Mostrar errores de formulario, si existen -->
+		{% if form.non_field_errors %}
+		<div class="alert alert-danger">{{ form.non_field_errors }}</div>
+		{% endif %}
+
+		<!-- Nombre del Perfil -->
+		<div class="mb-3">
+			<label for="id_nombre_perfil" class="form-label">Nombre del Perfil</label>
+			{{ form.nombre_perfil }} {% if form.nombre_perfil.errors %}
+			<div class="text-danger">{{ form.nombre_perfil.errors }}</div>
+			{% endif %}
+		</div>
+
+		<!-- Fecha de Nacimiento -->
+		<div class="mb-3">
+			<label for="id_fecha_nacimiento" class="form-label"
+				>Fecha de Nacimiento</label
+			>
+			{{ form.fecha_nacimiento }} {% if form.fecha_nacimiento.errors %}
+			<div class="text-danger">{{ form.fecha_nacimiento.errors }}</div>
+			{% endif %}
+		</div>
+
+		<!-- Peso -->
+		<div class="mb-3">
+			<label for="id_peso" class="form-label">Peso (kg)</label>
+			{{ form.peso }} {% if form.peso.errors %}
+			<div class="text-danger">{{ form.peso.errors }}</div>
+			{% endif %}
+		</div>
+
+		<!-- Deporte -->
+		<div class="mb-3">
+			<label for="id_deporte" class="form-label">Deporte</label>
+			{{ form.deporte }} {% if form.deporte.errors %}
+			<div class="text-danger">{{ form.deporte.errors }}</div>
+			{% endif %}
+		</div>
+
+		<!-- Género -->
+		<div class="mb-3">
+			<label for="id_genero" class="form-label">Género</label>
+			{{ form.genero }} {% if form.genero.errors %}
+			<div class="text-danger">{{ form.genero.errors }}</div>
+			{% endif %}
+		</div>
+
+		<!-- Botón de enviar -->
+		<button type="submit" class="btn btn-primary">Guardar</button>
+		<a href="{% url 'home' %}" class="btn btn-secondary">Cancelar</a>
+	</form>
+</div>
+{% endblock %}
