@@ -1,0 +1,75 @@
+body {
+    min-height: 100vh;
+    background: 
+        linear-gradient(
+            135deg,
+            rgba(255, 0, 0, 0.7),
+            rgba(0, 0, 0, 0.9)
+        ),
+        url('/static/img/background_1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+}
+
+.navbar-brand {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+}
+
+.login-container {
+    color: white;
+    max-width: 400px;
+    margin: auto;
+    padding: 4rem;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.form-control {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+}
+.form-control:focus {
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: none;
+}
+.btn-primary {
+    background-color: #ff4c4c;
+    border: none;
+}
+.btn-primary:hover {
+    background-color: #ff1f1f;
+}
+
+ .navbar-brand {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+}
+
+.register-container{
+    color: white;
+    max-width: 600px;
+    margin: auto;
+    padding: 4rem;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+} 
+#id_password1_helptext {
+    font-size: .6875rem;
+    color: rgb(241, 236, 236);  
+}
+
+#id_username_helptext{
+    font-size: .6875rem;
+    color: rgb(241, 236, 236);  
+
+}
+
+#id_password2_helptext{
+    font-size: .6875rem;
+    color: rgb(241, 236, 236);
+}
