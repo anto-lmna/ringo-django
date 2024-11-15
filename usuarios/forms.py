@@ -14,6 +14,9 @@ class PerfilForm(forms.ModelForm):
             "foto",
         ]
         widgets = {
+            "fecha_nacimiento": forms.DateInput(
+                attrs={"type": "date", "class": "form-control"}
+            ),
             "genero": forms.Select(attrs={"class": "form-control"}),
             "deporte": forms.Select(attrs={"class": "form-control"}),
             "foto": forms.ClearableFileInput(attrs={"class": "form-control"}),
