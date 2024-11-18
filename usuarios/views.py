@@ -12,8 +12,21 @@ from .forms import PerfilForm
 from django.shortcuts import redirect
 
 
+# Home
 class HomeView(TemplateView):
     template_name = "home.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        if self.request.user.is_authenticated:
+            try:
+                perfil = self.request.user.perfil
+            except Perfil.DoesNotExist:
+                perfil = None
+            context["perfil"] = perfil
+
+        return context
 
 
 # Crear Perfil
@@ -23,7 +36,6 @@ class PerfilCreateView(LoginRequiredMixin, CreateView):
     template_name = "perfil/perfil_form.html"
 
     def get_success_url(self):
-        # El 'self.object' es el objeto de perfil creado, que tiene el 'pk' asignado después de guardarlo.
         return reverse("ver_perfil", kwargs={"pk": self.object.pk})
 
     def form_valid(self, form):
@@ -43,7 +55,19 @@ class PerfilUpdateView(LoginRequiredMixin, UpdateView):
     model = Perfil
     form_class = PerfilForm
     template_name = "perfil/perfil_form.html"
-    success_url = reverse_lazy("ver_perfil")
+
+    def get_success_url(self):
+        return reverse("ver_perfil", kwargs={"pk": self.object.pk})
+
+    def form_valid(self, form):
+        if not form.cleaned_data["foto"]:
+            form.cleaned_data["foto"] = self.object.foto
+
+            # Si no se proporciona una nueva fecha, conservar la actual
+        if not form.cleaned_data.get("fecha_nacimiento"):
+            form.instance.fecha_nacimiento = self.object.fecha_nacimiento
+
+        return super().form_valid(form)
 
 
 # Eliminar Perfil
@@ -56,12 +80,9 @@ class PerfilDeleteView(LoginRequiredMixin, DeleteView):
 def perfil_redireccion(request):
     if request.user.is_authenticated:
         try:
-            # Verificar si el perfil del usuario existe
             perfil = Perfil.objects.get(user=request.user)
             return redirect("ver_perfil", pk=perfil.pk)
         except Perfil.DoesNotExist:
-            # Redirigir a crear perfil si no existe
             return redirect("crear_perfil")
     else:
-        # Si el usuario no está autenticado, redirigir al login
         return redirect("login")

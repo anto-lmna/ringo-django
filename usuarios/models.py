@@ -33,16 +33,15 @@ class Perfil(models.Model):
     def __str__(self):
         return self.nombre_perfil
 
-    def calcular_edad(self):
+    @property
+    def edad(self):
         if self.fecha_nacimiento:
             today = date.today()
-            edad = (
-                today.year
-                - self.fecha_nacimiento.year
-                - (
-                    (today.month, today.day)
-                    < (self.fecha_nacimiento.month, self.fecha_nacimiento.day)
-                )
-            )
+            edad = today.year - self.fecha_nacimiento.year
+            if today.month < self.fecha_nacimiento.month or (
+                today.month == self.fecha_nacimiento.month
+                and today.day < self.fecha_nacimiento.day
+            ):
+                edad -= 1
             return edad
         return None

@@ -1,19 +1,35 @@
 {% extends "_base.html" %}
+{% load static %}
 
 {% block content %}
-<div class="container mt-5">
-  <h2>Perfil de {{ perfil.nombre_perfil }}</h2>
-  <ul class="list-group mt-4">
-    <li class="list-group-item"><strong>Nombre:</strong> {{ perfil.nombre_perfil }}</li>
-    <li class="list-group-item"><strong>Edad:</strong> {{ perfil.edad }}</li>
-    <li class="list-group-item"><strong>Peso:</strong> {{ perfil.peso }}</li>
-    <li class="list-group-item"><strong>Deporte:</strong> {{ perfil.get_deporte_display }}</li>
-    <li class="list-group-item"><strong>Género:</strong> {{ perfil.get_genero_display }}</li>
+<div class="container d-flex flex-column align-items-center justify-content-center" style="min-height: 100vh;">
+  <!-- Título del Perfil -->
+  <h2 class="text-center mb-4 perfil-seccion">Perfil</h2>
+
+  <!-- Foto de Perfil -->
+  <div class="text-center mb-4">
     {% if perfil.foto %}
-      <li class="list-group-item"><strong>Foto:</strong> <img src="{{ perfil.foto.url }}" alt="Foto de perfil" class="img-thumbnail mt-2" width="200"></li>
+      <img src="{{ perfil.foto.url }}" alt="Foto de perfil" class="img-thumbnail rounded-circle" style="width: 200px; height: 200px; object-fit: cover;">
+    {% else %}
+      <img src="{% static 'img/default-user.png' %}" alt="Foto de perfil" class="img-thumbnail rounded-circle" style="width: 200px; height: 200px; object-fit: cover;">
     {% endif %}
-  </ul>
-  <a href="{% url 'editar_perfil' perfil.id %}" class="btn btn-secondary mt-4">Editar</a>
-  <a href="{% url 'eliminar_perfil' perfil.id %}" class="btn btn-danger mt-4">Eliminar</a>
+    <h3 class="mt-2"><strong class='user-name'>{{ perfil.nombre_perfil }}</strong></h3>
+  </div>
+
+  <!-- Información del Perfil -->
+  <div class="col-md-5 col-lg-3">
+    <ul class="list-group text-center">
+      <li class="list-group-item"><strong>Edad:</strong> {{ perfil.edad}}</li>
+      <li class="list-group-item"><strong>Género:</strong> {{ perfil.get_genero_display }}</li>
+      <li class="list-group-item"><strong>Peso:</strong> {{ perfil.peso }} kg</li>
+      <li class="list-group-item"><strong>Deporte:</strong> {{ perfil.get_deporte_display }}</li>
+    </ul>
+    <div class="d-flex justify-content-around mt-4">
+      <a href="{% url 'editar_perfil' perfil.id %}" class="btn btn-secondary">Editar</a>
+      <a href="{% url 'eliminar_perfil' perfil.id %}" class="btn btn-danger">Eliminar</a>
+    </div>
+  </div>
 </div>
+
 {% endblock %}
+
