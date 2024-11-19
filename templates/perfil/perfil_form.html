@@ -24,9 +24,11 @@
 					/>
 				</div>
 				
-				<label for="id_foto" class="form-label">Seleccionar Foto</label>
-				{{ form.foto }}
-
+				<label for="id_foto" class="form-label">Seleccionar Imagen</label>
+				<input type="checkbox" name="foto-clear" id="foto-clear_id">
+				<label for="foto-clear_id">Borrar</label>
+				<input type="file" name="foto" class="form-control" accept="image/*" id="id_foto">
+				
 				{% if form.foto.errors %}
 					<div class="text-danger">{{ form.foto.errors }}</div>
 				{% endif %}

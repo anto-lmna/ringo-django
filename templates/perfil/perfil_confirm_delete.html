@@ -1,7 +1,7 @@
 {% extends "_base.html" %}
 
 {% block content %}
-<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+<div class="container d-flex justify-content-center align-items-center eliminar-card" style="min-height: 80vh;">
   <div class="card shadow-sm" style="width: 100%; max-width: 500px;">
     <div class="card-body text-center">
       <h2 class="card-title text-danger mb-4">Eliminar Perfil</h2>
@@ -16,4 +16,12 @@
     </div>
   </div>
 </div>
+{% block script %}
+<script>
+    document.body.style.background = "linear-gradient(135deg, rgba(255, 0, 0, 0.5), rgba(0, 0, 0, 0.9)), url('/static/img/background_3.jpg')";
+    document.body.style.backgroundSize = "cover";
+    document.body.style.backgroundPosition = "center";
+    document.body.style.backgroundRepeat = "no-repeat";
+</script>
+{% endblock script %}
 {% endblock %}
