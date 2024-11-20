@@ -1,13 +1,12 @@
 from django.contrib import admin
 from .models import Perfil
-from django.utils.translation import gettext_lazy as _
 
 
-# Registrar el modelo Perfil en el admin
+# Registro del modelo Perfil en el admin
 @admin.register(Perfil)
 class PerfilAdmin(admin.ModelAdmin):
-    verbose_name = _("Perfil")
-    verbose_name_plural = _("Perfiles")
+    verbose_name = "Perfil"
+    verbose_name_plural = "Perfiles"
 
     list_display = (
         "nombre_perfil",
@@ -22,4 +21,4 @@ class PerfilAdmin(admin.ModelAdmin):
         "user__username",
     )  # Para permitir la búsqueda por nombre de perfil y usuario
     list_filter = ("deporte", "genero")  # Para agregar filtros por deporte y género
-    readonly_fields = ("user",)  # Si quieres que el campo 'user' sea solo lectura
+    readonly_fields = ("user",)  # Campo user solo de lectura

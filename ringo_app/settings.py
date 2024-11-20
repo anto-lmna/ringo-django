@@ -131,7 +131,7 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 STATICFILES_DIRS = [BASE_DIR / "static"]
-LOGIN_REDIRECT_URL = "home"
+LOGIN_REDIRECT_URL = "login_redireccion"
 LOGOUT_REDIRECT_URL = "home"
 
 MEDIA_URL = "/media/"
@@ -143,11 +143,11 @@ JAZZMIN_SETTINGS = {
     # title of the window (Will default to current_admin_site.site_title if absent or None)
     "site_title": "RinGo admin",
     # Title on the login screen (19 chars max) (defaults to current_admin_site.site_header if absent or None)
-    "site_header": "Ringo",
+    "site_header": "RinGO",
     # Title on the brand (19 chars max) (defaults to current_admin_site.site_header if absent or None)
-    "site_brand": "Ringo",
+    "site_brand": "RinGo",
     # Logo to use for your site, must be present in static files, used for brand on top left
-    # "site_logo": "img/ringo_logo.png",
+    "site_logo": "img/ringo_logo.png",
     # Logo to use for your site, must be present in static files, used for login form logo (defaults to site_logo)
     "login_logo": None,
     # Logo to use for login form in dark themes (defaults to login_logo)
