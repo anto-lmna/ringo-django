@@ -12,6 +12,7 @@ from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from .models import Perfil
 from .forms import PerfilForm
@@ -38,8 +39,19 @@ class HomeView(TemplateView):
         return context
 
 
+# Clase para saber si pertenece al grupo Miembro
+class EsMiembroMixin:
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            context["es_miembro"] = self.request.user.groups.filter(
+                name="Miembro"
+            ).exists()
+        return context
+
+
 # Crear Perfil
-class PerfilCreateView(LoginRequiredMixin, CreateView):
+class PerfilCreateView(LoginRequiredMixin, EsMiembroMixin, CreateView):
     model = Perfil
     form_class = PerfilForm
     template_name = "perfil/perfil_form.html"
@@ -53,14 +65,14 @@ class PerfilCreateView(LoginRequiredMixin, CreateView):
 
 
 # Ver Perfil
-class PerfilDetailView(LoginRequiredMixin, DetailView):
+class PerfilDetailView(LoginRequiredMixin, EsMiembroMixin, DetailView):
     model = Perfil
     template_name = "perfil/perfil_detail.html"
     context_object_name = "perfil"
 
 
 # Editar Perfil
-class PerfilUpdateView(LoginRequiredMixin, UpdateView):
+class PerfilUpdateView(LoginRequiredMixin, EsMiembroMixin, UpdateView):
     model = Perfil
     form_class = PerfilForm
     template_name = "perfil/perfil_form.html"
@@ -104,7 +116,7 @@ def login_redireccion(request):
         return redirect("/admin")
 
     elif request.user.groups.filter(name="Miembro").exists():
-        return redirect("miembros_panel")
+        return redirect("home")
     else:
         try:
             perfil = Perfil.objects.get(user=request.user)
@@ -113,17 +125,16 @@ def login_redireccion(request):
             return redirect("crear_perfil")
 
 
+# Panel visible para los del grupo Miembro
 class MiembrosPanelView(LoginRequiredMixin, ListView):
     model = User
-    template_name = "miembros_panel.html"
+    template_name = "perfil/miembros_panel.html"
     context_object_name = "usuarios"
     paginate_by = 12
 
     def get_queryset(self):
         # Obtener usuarios junto con sus perfiles
-        queryset = User.objects.all().select_related(
-            "perfil"
-        )  # Usamos select_related para optimizar la consulta
+        queryset = User.objects.all().select_related("perfil")
 
         # Filtrar por búsqueda si existe
         search_query = self.request.GET.get("search", "")
@@ -136,10 +147,35 @@ class MiembrosPanelView(LoginRequiredMixin, ListView):
                 | Q(perfil__deporte__icontains=search_query)  # Buscar en deporte
             ).distinct()
 
+        # Filtrar usuarios con perfil asociado
+        queryset = queryset.filter(perfil__isnull=False)
+
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Añadir la lista de perfiles a la vista
-        context["perfiles"] = Perfil.objects.all()
+
+        # Paginación manual
+        usuarios = self.get_queryset()  # Obtén el queryset de usuarios filtrados
+        paginator = Paginator(usuarios, self.paginate_by)  # Paginar los resultados
+        page = self.request.GET.get("page")  # Obtener el número de página de la URL
+
+        try:
+            usuarios = paginator.page(page)  # Obtener la página solicitada
+        except PageNotAnInteger:
+            # Si no es un número entero, mostramos la primera página
+            usuarios = paginator.page(1)
+        except EmptyPage:
+            # Si la página está fuera de rango, mostramos la última página
+            usuarios = paginator.page(paginator.num_pages)
+
+        # Pasamos el queryset paginado al contexto
+        context["usuarios"] = usuarios
+
+        # Acceso al perfil del usuario logueado con manejo de excepción si no existe
+        try:
+            context["perfil"] = Perfil.objects.get(user=self.request.user)
+        except Perfil.DoesNotExist:
+            context["perfil"] = None
+
         return context

@@ -1,0 +1,98 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="text-center mb-4 text-white">Panel de Miembros</h1>
+
+    <div class="row">
+        <!-- Perfiles -->
+        <div class="col-12">
+            <h2 class="text-center text-white">Perfiles</h2>
+            
+            <div class="d-flex justify-content-center mb-4">
+                <form method="get" action="{% url 'miembros_panel' %}" class="w-50">
+                    <div class="input-group">
+                        <input type="text" name="search" class="form-control" placeholder="Buscar perfil..." value="{{ request.GET.search }}">
+                        <button class="btn btn-outline-light" type="submit"><i class="fas fa-search"></i></button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="row mt-5">            
+                {% for usuario in usuarios %}
+                    {% with perfil=usuario.perfil %}
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+                        <div class="card" style="opacity: 0.9;">
+                            <!-- Imagen del perfil -->
+                            <div class="d-flex justify-content-center mt-4">
+                                <img src="{% if perfil.foto %}{{ perfil.foto.url }}{% else %}https://via.placeholder.com/100?text=Sin+Imagen{% endif %}" 
+                                     class="card-img-top rounded-circle" 
+                                     alt="Foto de perfil" 
+                                     style="width: 100px; height: 100px; object-fit: cover;">
+                            </div>
+                            <!-- Información del perfil -->
+                            <div class="card-body text-center">
+                                <h5 class="card-title">{{ perfil.nombre_perfil }}</h5>
+                                <p class="card-text">
+                                    <strong>Deporte:</strong> {{ perfil.deporte }}<br>
+                                    <strong>Edad:</strong> {{ perfil.edad }} años<br>
+                                    <strong>Peso:</strong> {{ perfil.peso }} kg<br>
+                                    <strong>Género:</strong> {{ perfil.genero|capfirst | default:"Sin especificar" }}<br>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endwith %}
+                {% endfor %}
+            </div>
+            {% comment %} Paginación {% endcomment %}
+            <div class="d-flex justify-content-center mt-4">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        {% if usuarios.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page=1{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}" aria-label="First">
+                                    <span aria-hidden="true">&laquo;&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ usuarios.previous_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        {% endif %}
+
+                        <!-- Páginas numeradas -->
+                        {% for num in usuarios.paginator.page_range %}
+                            {% if usuarios.number == num %}
+                                <li class="page-item active" aria-current="page">
+                                    <span class="page-link">{{ num }} <span class="sr-only">(actual)</span></span>
+                                </li>
+                            {% else %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ num }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">{{ num }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if usuarios.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ usuarios.next_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ usuarios.paginator.num_pages }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}" aria-label="Last">
+                                    <span aria-hidden="true">&raquo;&raquo;</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

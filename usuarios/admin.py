@@ -15,10 +15,10 @@ class PerfilAdmin(admin.ModelAdmin):
         "peso",
         "deporte",
         "genero",
-    )  # Ajusta estos campos según los que quieras mostrar
+    )  # campos que se muestran
     search_fields = (
         "nombre_perfil",
         "user__username",
-    )  # Para permitir la búsqueda por nombre de perfil y usuario
-    list_filter = ("deporte", "genero")  # Para agregar filtros por deporte y género
+    )  # busqueda por perfil y usuario
+    list_filter = ("deporte", "genero")  # filtra por deporte y genero
     readonly_fields = ("user",)  # Campo user solo de lectura

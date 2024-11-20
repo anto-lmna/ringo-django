@@ -21,11 +21,11 @@ class Perfil(models.Model):
     )
     foto = models.ImageField(upload_to="perfil_fotos/", blank=True, null=True)
     genero = models.CharField(
-        max_length=10,
+        max_length=20,
         choices=[
             ("masculino", "Masculino"),
             ("femenino", "Femenino"),
-            ("otro", "Otro"),
+            ("prefiero no decir", "Prefiero no decir"),
         ],
         default="otro",
     )
