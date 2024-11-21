@@ -17,7 +17,7 @@ pip install -r requirements.txt
 Correr el servidor de Django
 
 ```bash
-(env)$ cd ringo-app-crud
+(env)$ cd ringo-django
 (env)$ python manage.py runserver
 ```
 
