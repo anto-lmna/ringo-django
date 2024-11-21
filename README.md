@@ -39,26 +39,23 @@ Correr el servidor de Django
    ![image](https://github.com/user-attachments/assets/7e991385-fb0b-444f-b4a1-76abd192acaf)
 
 - Edición Perfil
-
-    ![image](https://github.com/user-attachments/assets/3699a53e-68a5-4148-be94-1a277e9f5213)
+    ![image](https://github.com/user-attachments/assets/1f825b60-bd4e-4850-9928-3d50973231bf)
 
 - Eliminación Perfil 
    ![image](https://github.com/user-attachments/assets/60a3fc38-a8aa-4466-8162-55f312171cf6)
 
-- Panel para miembros (solo usuarios pertenecientes al grupo Miembro pueden verlo)
-     ![image](https://github.com/user-attachments/assets/b1b28d81-0e2e-4343-a2ad-71a2dd57c6d9)
+### Panel para miembros (solo usuarios pertenecientes al grupo Miembro pueden verlo)
+![image](https://github.com/user-attachments/assets/b1b28d81-0e2e-4343-a2ad-71a2dd57c6d9)
+![image](https://github.com/user-attachments/assets/5eb819e8-1b62-4b0a-a3b3-911ca49315f9)
 
-     ![image](https://github.com/user-attachments/assets/5eb819e8-1b62-4b0a-a3b3-911ca49315f9)
-
-- Panel para administradores (permiso de superusuario)
+### Panel para administradores (permiso de superusuario)
    ![image](https://github.com/user-attachments/assets/14ef4833-3425-40b5-ae71-557e46a95786)
 
-    Vista para creación, modificación y eliminación de usuarios
+Vista para creación, modificación y eliminación de usuarios
+   ![image](https://github.com/user-attachments/assets/f56defec-cc0e-4bc9-b81e-1fe7a0826eab)
 
-     ![image](https://github.com/user-attachments/assets/f56defec-cc0e-4bc9-b81e-1fe7a0826eab)
-
-  Creación de grupos y permisos de acceso
-      ![image](https://github.com/user-attachments/assets/1df8f264-6d3f-4953-8960-91226ecdc1cb)
+Creación de grupos y permisos de acceso
+  ![image](https://github.com/user-attachments/assets/1df8f264-6d3f-4953-8960-91226ecdc1cb)
 
     
 
