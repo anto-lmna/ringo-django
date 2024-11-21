@@ -110,6 +110,7 @@ def perfil_redireccion(request):
         return redirect("login")
 
 
+# Redirección según tipo de acceso
 @login_required
 def login_redireccion(request):
     if request.user.is_superuser:
@@ -133,10 +134,9 @@ class MiembrosPanelView(LoginRequiredMixin, ListView):
     paginate_by = 12
 
     def get_queryset(self):
-        # Obtener usuarios junto con sus perfiles
         queryset = User.objects.all().select_related("perfil")
 
-        # Filtrar por búsqueda si existe
+        # Filtrado de busqueda
         search_query = self.request.GET.get("search", "")
         if search_query:
             queryset = queryset.filter(
@@ -155,21 +155,20 @@ class MiembrosPanelView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        # Paginación manual
-        usuarios = self.get_queryset()  # Obtén el queryset de usuarios filtrados
-        paginator = Paginator(usuarios, self.paginate_by)  # Paginar los resultados
-        page = self.request.GET.get("page")  # Obtener el número de página de la URL
+        # Configuración paginación
+        usuarios = self.get_queryset()
+        paginator = Paginator(usuarios, self.paginate_by)
+        page = self.request.GET.get("page")
 
         try:
-            usuarios = paginator.page(page)  # Obtener la página solicitada
+            usuarios = paginator.page(page)
         except PageNotAnInteger:
-            # Si no es un número entero, mostramos la primera página
+
             usuarios = paginator.page(1)
         except EmptyPage:
-            # Si la página está fuera de rango, mostramos la última página
+
             usuarios = paginator.page(paginator.num_pages)
 
-        # Pasamos el queryset paginado al contexto
         context["usuarios"] = usuarios
 
         # Acceso al perfil del usuario logueado con manejo de excepción si no existe
