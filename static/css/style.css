@@ -51,8 +51,6 @@ body {
 
 .register-container{
     color: white;
-    max-width: 600px;
-    max-height: 400px; 
     overflow-y: auto;  
     margin: auto;
     padding: 4rem;
@@ -60,6 +58,7 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 } 
+
 #id_password1_helptext {
     font-size: .6875rem;
     color: rgb(241, 236, 236);  
@@ -114,7 +113,7 @@ label[for="id_foto"] {
 
 ul .list-group-item {
     color: rgb(0, 0, 0);
-    background-color: rgba(255, 255, 255, 0.6); /* Blanco con 80% de opacidad */
+    background-color: rgba(255, 255, 255, 0.6); 
     padding: .625rem;
     margin: .1875rem;
 }
